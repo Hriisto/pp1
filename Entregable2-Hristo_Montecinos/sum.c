@@ -63,7 +63,7 @@ int main(int argc, char const *argv[]){
     MPI_Comm_size(MPI_COMM_WORLD, &process_size);
     MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
 
-    int tamaño_parcela_p = N*N / process_size;
+    int tamao_parcela_p = N*N / process_size;
     int *parcela = NULL;
     if(process_rank == root){
         parcela = (int*)malloc((N*N)*sizeof(int));
@@ -78,9 +78,9 @@ int main(int argc, char const *argv[]){
         printf("\n");
 
     }
-    int *sub_parcela = (int*)malloc((tamaño_parcela_p)*sizeof(int));
-    MPI_Scatter(parcela, tamaño_parcela_p, MPI_INT, sub_parcela, tamaño_parcela_p, MPI_INT, root, MPI_COMM_WORLD);
-    int cantidad_ovejas = mov_random(sub_parcela,tamaño_parcela_p,process_rank,P);
+    int *sub_parcela = (int*)malloc((tamao_parcela_p)*sizeof(int));
+    MPI_Scatter(parcela, tamao_parcela_p, MPI_INT, sub_parcela, tamao_parcela_p, MPI_INT, root, MPI_COMM_WORLD);
+    int cantidad_ovejas = mov_random(sub_parcela,tamao_parcela_p,process_rank,P);
     int *resultado_parcial = NULL;
     if(process_rank == root){
         resultado_parcial = (int*)malloc(process_size*sizeof(int));
